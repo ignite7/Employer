@@ -15,12 +15,12 @@ from app.config import Config
 import pdb
 
 
-config = { 
-  "apiKey": Config.API_KEY,
-  "authDomain": Config.AUTH_DOMAIN,
-  "databaseURL": Config.DATABASE_URL,
-  "storageBucket": Config.STORAGE_BUCKET,
-  "serviceAccount": Config.GOOGLE_AUTH_APP
+config = {      
+    "apiKey": Config.API_KEY,
+    "authDomain": Config.AUTH_DOMAIN,
+    "databaseURL": Config.DATABASE_URL,
+    "storageBucket": Config.STORAGE_BUCKET,
+    "serviceAccount": Config.GOOGLE_AUTH_APP
 }
 
 
@@ -32,8 +32,8 @@ class CrudDB(object):
     
     def __init__(self, info):
         """
-        Method manager to initialize the data base
-        connection.
+        Method that receives the info of the 
+        employer.
         """
         
         self.info = info
@@ -78,7 +78,17 @@ class CrudDB(object):
         
         
 class Authentication(object):
+    """
+    Main class manager to authenticate
+    the users.
+    """
+    
     def __init__(self, email, password):
+        """
+        Method that receives the email and
+        password.
+        """
+        
         self.email = email
         self.password = password
         
@@ -89,7 +99,6 @@ class Authentication(object):
         self.user = self.auth.create_user_with_email_and_password(self.email, self.password)
         
         self.user = self.auth.send_email_verification(self.user['idToken'])
-        
         
     def login(self):
         self.user = self.auth.sign_in_with_email_and_password(self.email, self.password)
@@ -106,4 +115,7 @@ class Authentication(object):
         self.user = self.auth.signOut()
         
         return self.user
+    
+    def reset_password(self):
+        self.user = self.auth.send_password_reset_email(self.email)
     

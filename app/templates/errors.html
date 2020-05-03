@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ super() }}
+    Oh no, bad luck!
+{% endblock %}
+
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/error.css') }}" rel="stylesheet"/>  
+{% endblock %}
+
+
+{% block content %}
+    <h1>Something was wrong!</h1>
+    <div class="container">
+        <img src="{{ url_for('static', filename='img/error.gif') }}">
+    </div>
+    <h3>{{ code_error }}</h3>
+{% endblock %}

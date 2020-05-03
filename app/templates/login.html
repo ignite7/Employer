@@ -8,7 +8,7 @@
 
 {% block head %}
     {{ super() }}
-    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet"/>  
+    <link href="{{ url_for('static', filename='css/auth.css') }}" rel="stylesheet"/>  
 {% endblock %}
 
 
@@ -29,7 +29,8 @@
                                 <label for="inputPassword">Password</label>
                             </div>
                             <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="signin" value="Sing In">
-                            <input class="btn btn-lg btn-secondary btn-block text-uppercase" type="submit" onclick="window.location='{{ url_for('signup') }}';" name="signup" value="Sing Up">
+                            <input class="btn btn-lg btn-link btn-block text-uppercase" type="submit" onclick="window.location='{{ url_for('reset_password') }}';" name="forgot_password" value="Forgot the password?">
+                            <input class="btn btn-lg btn-link btn-block text-uppercase" type="submit" onclick="window.location='{{ url_for('signup') }}';" name="signup" value="Sing Up">
                         </form>
                     </div>
                 </div>

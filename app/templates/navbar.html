@@ -3,7 +3,7 @@
     <div class="container">
       <a class="navbar-brand" href="{{ url_for('index') }}">
         <img src="{{ url_for('static', filename='img/logo.png') }}" width="40" height="40" class="d-inline-block align-top" alt="">
-        &nbsp;EmployerDB
+        &nbsp;Employer
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,9 +23,6 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('search_by_id') }}">Search By Id</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Manual</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>

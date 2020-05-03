@@ -7,12 +7,12 @@ from flask import render_template, url_for, request, redirect, flash, session
 from flask_paranoid import Paranoid
 
 
-
 # Local modules
 from app import _create_app
 from app.db.firebase import CrudDB, Authentication
 
 # Utilities
+from werkzeug.exceptions import HTTPException # Handler errors web
 import requests
 import uuid
 import random
@@ -33,6 +33,8 @@ def index():
     """
 
     if not session.get('user_session'):
+        flash('Please log in first!')
+        
         return redirect(url_for('login'))
     
     else:
@@ -61,6 +63,8 @@ def active():
     """
     
     if not session.get('user_session'):
+        flash('Please log in first!')
+        
         return redirect(url_for('login'))
     
     else:
@@ -78,6 +82,8 @@ def validate():
     """
 
     if not session.get('user_session'):
+        flash('Please log in first!')
+        
         return redirect(url_for('login'))
     
     else:
@@ -110,6 +116,8 @@ def search_by_id():
     """
     
     if not session.get('user_session'):
+        flash('Please log in first!')
+        
         return redirect(url_for('login'))
     
     else:
@@ -142,6 +150,8 @@ def checkout(uid, data):
     """
     
     if not session.get('user_session'):
+        flash('Please log in first!')
+        
         return redirect(url_for('login'))
     
     else:
@@ -259,6 +269,8 @@ def logout():
     """
     
     if not session.get('user_session'):
+        flash('Please log in first!')
+        
         return redirect(url_for('login'))
     
     else:
@@ -268,7 +280,47 @@ def logout():
         flash('You are log out now!')
         
         return redirect(url_for('login'))
+
+
+@app.route('/auth/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    """
+    Function manager to show the form to reset
+    the password.
+    """
+    
+    if request.method == 'POST':
+        email = request.form['email']
         
+        try:
+            Authentication(email, 'reset_password').reset_password()
+        
+            flash('We have send a link to your email for reset the password!')
+        
+            return redirect(url_for('login'))
+
+        except requests.exceptions.HTTPError:
+            flash('Something was wrong with your email, please register first!')
+            
+            return redirect(url_for('signup'))
+        
+    return render_template('reset_password.html')
+
+
+@app.errorhandler(Exception)
+def errors(error):
+    """
+    Function manager to show the error
+    page to the users.
+    """
+    
+    code_error = 'Oh no, bad luck!'
+    
+    if isinstance(error, HTTPException):
+        code_error = error
+        
+    return render_template('errors.html', code_error=code_error)
 
 if __name__ == '__main__':
     app.run()
+    
