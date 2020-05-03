@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import 'form.html' as form %}
+
+
+{% block title %}
+    {{ super() }}
+    Home
+{% endblock %}
+
+
+{% block head %}
+    {{ super() }}  
+    <link href="{{ url_for('static', filename='css/checkout.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Info Change</h1>
+    
+    {{ form.uuid_form(employer_id, employer, active_form) }}
+{% endblock %}

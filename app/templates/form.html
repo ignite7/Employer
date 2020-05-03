@@ -1,0 +1,93 @@
+{% macro uuid_form(uid, employer, active_form ) %}
+    <div class="container-md mx-auto">
+        <form {% if active_form  %}action="{{ url_for('validate') }}"{% else %}action="/checkout/<uid>/<connection>"{% endif %} method="POST" class="main-form" onsubmit="return dontAllowCommas()">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <label class="sr-only" for="inlineFormInputGroup">Identification</label>
+                    <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text shadow">Identification</div>
+                    </div>
+                    <input type="text" {% if active_form %}value="{{ uid }}"{% else %}value="{{ uid }}"{% endif %}class="form-control" id="inlineFormInputGroup" name="id" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Name</label>
+                        <input type="text" class="form-control shadow" id="formGroupExampleInput" {% if active_form %}value=""{% else %}value="{{ employer[13] }}"{% endif %}name="name" required>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Surname</label>
+                        <input type="text" class="form-control shadow" id="formGroupExampleInput" {% if active_form %}value=""{% else %}value="{{ employer[15] }}"{% endif %}name="surname" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Email</label>
+                        <input type="email" class="form-control shadow" id="inputEmail4" {% if active_form %}value=""{% else %}value="{{ employer[9] }}"{% endif %}name="email" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label for="inputCountry">Country</label>
+                    <input type="text" class="form-control shadow" id="formGroupExampleInput" {% if active_form %}value=""{% else %}value="{{ employer[7] }}"{% endif %}name="country" required>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control shadow" id="formGroupExampleInput" {% if active_form %}value=""{% else %}value="{{ employer[5] }}"{% endif %}name="city" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="formGroupExampleInpu">Age</label>
+                    <input type="number" class="form-control shadow" id="formGroupExampleInput" {% if active_form %}value=""{% else %}value="{{ employer[3] }}"{% endif %}name="age" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control shadow" id="formGroupExampleInput" name="address" {% if active_form %}value=""{% else %}value="{{ employer[1] }}"{% endif %}required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="formGroupExampleInput">Job</label>
+                    <input type="text" class="form-control shadow" id="formGroupExampleInput" {% if active_form %}value=""{% else %}value="{{ employer[11] }}"{% endif %}name="job" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="mb-3 col-md-12">
+                    <label for="validationTextarea">Comments</label>
+                    <textarea class="form-control shadow" id="Textarea" name="text">{% if active %} {% else %}{{ employer[17] }}{% endif %}</textarea>
+                </div>
+            </div>
+            <div class="text-center"> 
+                {% if active_form %}
+                    <input type="submit" class="btn btn-success shadow" name="checkin" value="Check In"/>
+                    <input type="submit" onclick="window.location={{ url_for('index') }};" class="btn btn-warning shadow" name="checkin" value="Reset"/>
+                {% else %}
+                    <input type="submit" class="btn btn-success shadow" name="update" value="Update"/>
+                    <input type="submit" class="btn btn-primary shadow" name="delete" value="Delete"/>
+                {% endif %}
+            </div>
+            <script>
+                function dontAllowCommas(){
+                    var inputVal1 = document.getElementById("formGroupExampleInput").value.indexOf(",") > true;
+                    var inputVal2 = document.getElementById("inputEmail4").value.indexOf(",") > true;
+                    var inputVal3 = document.getElementById("Textarea").value.indexOf(",") > true;
+                    
+        
+                    if(inputVal1 == true || inputVal2 == true || inputVal3 == true){
+                        alert("Only allow points in the text. Don\'t allow this type of characters: [ ] ( ) '' , ;");
+                        return(false);
+                    };
+                };
+            </script>
+        </form>
+    </div>
+{% endmacro %}

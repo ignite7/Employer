@@ -1,0 +1,50 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'navbar.html' as navbar %}
+
+{% block head %}
+    {{ super() }}
+    <title>
+        {% block title %}
+        EmployerDB | 
+        {% endblock %}
+    </title>
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block body %}
+    {% block navbar %}
+        {{ navbar.session(active_session) }}
+    {% endblock %}
+    <div class="container bg-transparent">
+        <div class="card border-0 my-5 bg-transparent">
+            <div class="card-body p-5">    
+                {% for alerts in get_flashed_messages() %}
+                    <div class=" alert alert-success alert-dismissiable">
+                        {{ alerts }}
+                        <button type="button" data-dismiss="alert" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            
+
+                {% block content %}
+                {% endblock %}
+
+
+                {% block scripts %}
+                    {{ super() }}
+                    <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
+                    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+                {% endblock %}
+
+
+                {% block footer%}
+                    {% include 'footer.html' %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

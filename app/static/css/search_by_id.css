@@ -1,0 +1,19 @@
+.container-md{
+    width: max-content;
+    margin-bottom: 100px;
+}
+
+.main-form{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.btn{
+    width: 225px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}

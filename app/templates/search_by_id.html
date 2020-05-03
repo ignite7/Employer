@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ super() }}
+    Search By Id
+{% endblock %}
+
+
+{% block head %}
+    {{ super() }}  
+    <link href="{{ url_for('static', filename='css/search_by_id.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Search By Id</h1>
+    <div class="container-md mx-auto">
+        <form action="{{ url_for('search_by_id') }}" method="POST" class="main-form">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <label class="sr-only" for="inlineFormInputGroup">Identification</label>
+                    <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text shadow">Identification</div>
+                    </div>
+                    <input type="search" class="form-control" id="inlineFormInputGroup" name="id" required>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center"> 
+                <input type="submit" class="btn btn-info shadow" name="checkout" value="Check Out">
+                <input type="submit"  onclick="window.location={{ url_for('search_by_id') }};" class="btn btn-warning shadow" name="checkin" value="Reset"/>
+            </div>
+        </form>
+    <div>
+{% endblock %}

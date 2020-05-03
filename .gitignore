@@ -1,0 +1,8 @@
+# Pychache files
+app/db/__pycache__/*
+app/__pycache__/*
+__pycache__/*
+
+
+# Virtualenv 
+.venv/*
