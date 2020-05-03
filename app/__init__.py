@@ -23,5 +23,5 @@ def _create_app():
     bootstrap = Bootstrap(app) # Converting in Bootstrap app
 
     app.config.from_object(Config) # Call the files configurations
-    
-    return app 
+
+    return app

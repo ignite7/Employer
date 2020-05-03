@@ -3,7 +3,7 @@ File manager to connect with the data base of
 firestore.
 """
 
-# Firestore libraries
+# Pyrebase libraries
 import pyrebase
 
 
@@ -88,12 +88,19 @@ class Authentication(object):
     def signup(self):
         self.user = self.auth.create_user_with_email_and_password(self.email, self.password)
         
-        #check_email = self.auth.send_email_verification(self.user['idToken'])
+        self.user = self.auth.send_email_verification(self.user['idToken'])
+        
         
     def login(self):
         self.user = self.auth.sign_in_with_email_and_password(self.email, self.password)
         
-        return self.user
+        check_email_verified = self.auth.get_account_info(self.user['idToken'])
+        
+        if check_email_verified['users'][0]['emailVerified'] == False:
+            return 'email_no_verified'
+        
+        else:
+            return self.user
     
     def logout(self):
         self.user = self.auth.signOut()

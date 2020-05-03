@@ -29,7 +29,6 @@ class Config(object):
     STORAGE_BUCKET = environ.get('STORAGE_BUCKET')
     GOOGLE_AUTH_APP = environ.get('GOOGLE_AUTH_APP')
 
-
     """
     # Static Assets
     STATIC_FOLDER = environ.get('STATIC_FOLDER')

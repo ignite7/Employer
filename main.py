@@ -4,6 +4,9 @@ Main file of the application
 
 # Flask libraries
 from flask import render_template, url_for, request, redirect, flash, session
+from flask_paranoid import Paranoid
+
+
 
 # Local modules
 from app import _create_app
@@ -12,14 +15,17 @@ from app.db.firebase import CrudDB, Authentication
 # Utilities
 import requests
 import uuid
+import random
 import pdb # Tests in mode console, execute: pdb.set_trace() anywhere
 
 
 # Creation of the application IMPORTANT
 app = _create_app() 
+paranoid = Paranoid(app) # Session hash
 
 
 @app.route('/', methods=['GET', 'POST'])
+@paranoid.on_invalid_session
 def index():
     """ 
     Funtion manager to show the
@@ -47,6 +53,7 @@ def index():
     
 
 @app.route('/active', methods=['GET', 'POST'])
+@paranoid.on_invalid_session
 def active():
     """
     Function manager to make alteration in the
@@ -63,6 +70,7 @@ def active():
     
         
 @app.route('/validate', methods=['GET', 'POST'])
+@paranoid.on_invalid_session
 def validate():
     """ 
     Funtion manager to validate the
@@ -74,13 +82,14 @@ def validate():
     
     else:
         if request.method == 'POST':
-            check = [i for i in request.form]
             info = {key: value for key, value in request.form.items()}
+            create = request.form['checkin']
             
-            add = check[10]
-            
-            if add == 'checkin':    
-                flash('The new employer {} was added successfully!'.format(info['name'])) # Success
+            if create:    
+                flash('The new employer {} was added with the ID {} successfully!'.format(
+                    info['name'], 
+                    info['id'])
+                ) # Success
             
                 CrudDB(info).create()
                 
@@ -93,6 +102,7 @@ def validate():
 
 
 @app.route('/search-by-id', methods=['GET', 'POST'])
+@paranoid.on_invalid_session
 def search_by_id():
     """
     Funtion manager to search the id of the
@@ -104,13 +114,10 @@ def search_by_id():
     
     else:
         if request.method == 'POST':
-            check = [i for i in request.form]
             info = {key: value for key, value in request.form.items()}
-            
-            checkout = check[1]
-            
-            
-            if checkout == 'checkout':     
+            checkout = request.form['checkout']
+
+            if checkout:     
                 try:
                     data = CrudDB(info).read()
 
@@ -127,6 +134,7 @@ def search_by_id():
     
     
 @app.route('/checkout/<uid>/<data>', methods=['GET', 'POST'])
+@paranoid.on_invalid_session
 def checkout(uid, data):
     """
     Funtion manager to show the info of the
@@ -195,7 +203,7 @@ def signup():
         try:
             Authentication(email, password).signup()
             
-            flash('You are sign up now!')
+            flash('Please check your email and validate your new account!')
             
             return redirect(url_for('login'))
         
@@ -220,14 +228,20 @@ def login():
         password = request.form['password']
         
         try:
-            Authentication(email, password).login()
+            auth = Authentication(email, password).login()
             
-            session['user_session'] = 'current_session'
+            if auth == 'email_no_verified':
+                flash('Please check out if your email account is verified!')
+                
+                return redirect(url_for('login'))
             
-            flash('You are in now!')
-            
-            return redirect(url_for('index'))
-            
+            else:
+                session['user_session'] = random.randint(1, 10000)
+                
+                flash('You are in now!')
+                
+                return redirect(url_for('index'))
+                
         except requests.exceptions.HTTPError:
             flash('Something was wrong with your credentials!')
             
@@ -237,6 +251,7 @@ def login():
 
 
 @app.route('/auth/signout', methods=['GET', 'POST'])
+@paranoid.on_invalid_session
 def logout():
     """
     Function manager to show the sign out
@@ -248,6 +263,7 @@ def logout():
     
     else:
         session.pop('user_session')
+        session.pop('_paranoid_token')
         
         flash('You are log out now!')
         
@@ -255,4 +271,4 @@ def logout():
         
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
