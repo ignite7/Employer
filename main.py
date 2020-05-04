@@ -322,5 +322,5 @@ def errors(error):
     return render_template('errors.html', code_error=code_error)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='127.0.0.1', port=5000)
     
