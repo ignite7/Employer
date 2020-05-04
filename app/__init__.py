@@ -3,7 +3,7 @@ Initialize the application and configuration.
 """
 
 # Flask libraries
-from flask import Flask, request, render_template
+from flask import Flask
 from flask_bootstrap import Bootstrap
 
 

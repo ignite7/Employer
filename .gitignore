@@ -5,4 +5,8 @@ __pycache__/*
 
 
 # Virtualenv 
-.venv/*
+.env/*
+
+
+# Firebase files
+app/db/connection_firebase.json

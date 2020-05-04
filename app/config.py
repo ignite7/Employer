@@ -2,7 +2,7 @@
 Whole configuration of the application.
 """
 
-from os import environ, path
+from os import environ, path, urandom
 from dotenv import load_dotenv
 
 
@@ -17,7 +17,7 @@ class Config(object):
     """
     
     # General config
-    SECRET_KEY = environ.get('SECRET_KEY')
+    SECRET_KEY = urandom(24) # Secret ramdom key
     FLASK_APP = environ.get('FLASK_APP')
     FLASK_ENV = environ.get('FLASK_ENV')
     
