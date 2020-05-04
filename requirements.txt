@@ -1,2 +1,7 @@
 flask
 flask-bootstrap
+flask-paranoid
+requests==2.11.1
+pyrebase
+python-dotenv
+gunicorn
