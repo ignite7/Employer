@@ -17,6 +17,10 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('signup') }}">Sing Up</a>
           </li>
+    {% elif active_session == 'error' %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}">Go Back</a>
+          </li>
     {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('index') }}">Employers</a>

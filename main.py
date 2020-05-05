@@ -6,6 +6,7 @@ Main file of the application
 from flask import render_template, url_for, request, redirect, flash, session
 from flask_paranoid import Paranoid
 
+
 # Flask server
 from waitress import serve
 
@@ -319,8 +320,8 @@ def errors(error):
     """
 
     code_error = 'Oh no, bad luck!'
-    active_session = True
-
+    active_session = 'error'
+    
     context = {
         'code_error': code_error,
         'active_session': active_session
