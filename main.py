@@ -320,8 +320,13 @@ def errors(error):
     """
 
     code_error = 'Oh no, bad luck!'
-    active_session = 'error'
     
+    if not session.get('user_session'):
+        active_session = False
+
+    else:
+        active_session = True
+
     context = {
         'code_error': code_error,
         'active_session': active_session
