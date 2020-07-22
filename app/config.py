@@ -28,13 +28,4 @@ class Config(object):
     DATABASE_URL = environ.get('DATABASE_URL')
     STORAGE_BUCKET = environ.get('STORAGE_BUCKET')
     GOOGLE_AUTH_APP = environ.get('GOOGLE_AUTH_APP')
-
-    """
-    # Static Assets
-    STATIC_FOLDER = environ.get('STATIC_FOLDER')
-    TEMPLATES_FOLDER = environ.get('TEMPLATES_FOLDER')
-
-    # Flask-SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_TRACK_MODIFICATIONS = environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
-    """
+    
